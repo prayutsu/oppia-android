@@ -2,6 +2,7 @@ package org.oppia.app.player.exploration
 
 import android.content.Context
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -47,6 +48,7 @@ class ExplorationActivityPresenter @Inject constructor(
   private lateinit var explorationId: String
   private lateinit var context: Context
   private var backflowScreen: Int? = null
+  private lateinit var binding: ExplorationActivityBinding
 
   enum class ParentActivityForExploration(val value: Int) {
     BACKFLOW_SCREEN_LESSONS(0),
@@ -65,7 +67,7 @@ class ExplorationActivityPresenter @Inject constructor(
     explorationId: String,
     backflowScreen: Int?
   ) {
-    val binding = DataBindingUtil.setContentView<ExplorationActivityBinding>(
+    binding = DataBindingUtil.setContentView<ExplorationActivityBinding>(
       activity,
       R.layout.exploration_activity
     )
@@ -78,8 +80,12 @@ class ExplorationActivityPresenter @Inject constructor(
     explorationToolbarTitle = binding.explorationToolbarTitle
     activity.setSupportActionBar(explorationToolbar)
 
+
     binding.explorationToolbar.setOnClickListener {
+      binding.explorationToolbarTitle.ellipsize = TextUtils.TruncateAt.MARQUEE
+      binding.explorationToolbarTitle.marqueeRepeatLimit = 1
       binding.explorationToolbarTitle.isSelected = true
+
     }
 
     binding.explorationToolbar.setNavigationOnClickListener {
@@ -88,6 +94,7 @@ class ExplorationActivityPresenter @Inject constructor(
 
     binding.actionAudioPlayer.setOnClickListener {
       getExplorationFragment()?.handlePlayAudio()
+      binding.explorationToolbarTitle.ellipsize = TextUtils.TruncateAt.END
     }
 
     updateToolbarTitle(explorationId)
@@ -216,6 +223,7 @@ class ExplorationActivityPresenter @Inject constructor(
   }
 
   fun onKeyboardAction(actionCode: Int) {
+    binding.explorationToolbarTitle.ellipsize = TextUtils.TruncateAt.END
     if (actionCode == EditorInfo.IME_ACTION_DONE) {
       val explorationFragment = activity.supportFragmentManager.findFragmentByTag(
         TAG_EXPLORATION_FRAGMENT

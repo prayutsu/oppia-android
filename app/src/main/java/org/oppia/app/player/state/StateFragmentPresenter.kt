@@ -1,6 +1,7 @@
 package org.oppia.app.player.state
 
 import android.content.Context
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.Transformations
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.exploration_activity.*
 import org.oppia.app.R
 import org.oppia.app.databinding.StateFragmentBinding
 import org.oppia.app.fragment.FragmentScope
@@ -178,6 +180,8 @@ class StateFragmentPresenter @Inject constructor(
   fun onSubmitButtonClicked() {
     hideKeyboard()
     handleSubmitAnswer(viewModel.getPendingAnswer(recyclerViewAssembler::getPendingAnswerHandler))
+    activity.exploration_toolbar_title.isSelected = false
+    activity.exploration_toolbar_title.ellipsize = TextUtils.TruncateAt.END
   }
 
   fun onResponsesHeaderClicked() {
@@ -211,6 +215,7 @@ class StateFragmentPresenter @Inject constructor(
 
   fun handleKeyboardAction() {
     hideKeyboard()
+    activity.exploration_toolbar_title.isSelected = false
     if (viewModel.getCanSubmitAnswer().get() == true) {
       handleSubmitAnswer(viewModel.getPendingAnswer(recyclerViewAssembler::getPendingAnswerHandler))
     }
@@ -482,6 +487,7 @@ class StateFragmentPresenter @Inject constructor(
   }
 
   private fun hideKeyboard() {
+    activity.exploration_toolbar_title.isSelected = false
     val inputManager: InputMethodManager =
       activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputManager.hideSoftInputFromWindow(
