@@ -67,4 +67,17 @@ class TopicTestActivityForStoryTest {
       ).check(matches(isDisplayed()))
     }
   }
+
+  @Test
+  fun testTopicTestActivityForStory_playTop_storyItemIsExpanded() {
+    launch(TopicTestActivityForStory::class.java).use {
+      onView(
+        atPositionOnView(
+          R.id.story_summary_recycler_view,
+          2,
+          R.id.chapter_recycler_view
+        )
+      ).check(matches(isDisplayed()))
+    }
+  }
 }
