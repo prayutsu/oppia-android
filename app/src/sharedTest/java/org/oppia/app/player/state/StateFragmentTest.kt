@@ -33,6 +33,7 @@ import androidx.test.espresso.matcher.ViewMatchers.hasChildCount
 import androidx.test.espresso.matcher.ViewMatchers.isClickable
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
+import androidx.test.espresso.matcher.ViewMatchers.isSelected
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.espresso.util.HumanReadables
@@ -314,6 +315,19 @@ class StateFragmentTest {
   }
 
   @Test
+  fun testStateFragment_loadExp_secondState_submitAnswer_() {
+    launchForExploration(TEST_EXPLORATION_ID_2).use {
+      startPlayingExploration()
+      clickContinueInteractionButton()
+
+      typeFractionText("1/2")
+
+      scrollToViewType(SUBMIT_ANSWER_BUTTON)
+      onView(withId(R.id.submit_answer_button)).check(matches(isClickable()))
+    }
+  }
+
+  @Test
   fun testStateFragment_loadExp_secondState_submitAnswer_clickSubmit_continueButtonIsVisible() {
     launchForExploration(TEST_EXPLORATION_ID_2).use {
       startPlayingExploration()
@@ -325,6 +339,22 @@ class StateFragmentTest {
       scrollToViewType(CONTINUE_NAVIGATION_BUTTON)
       onView(withId(R.id.continue_navigation_button)).check(
         matches(withText(R.string.state_continue_button))
+      )
+    }
+  }
+
+  @Test
+  fun testStateFragment_loadExp_secondState_submitAnswer_clickSubmit_isToolbarTitleSelected() {
+    launchForExploration(TEST_EXPLORATION_ID_2).use {
+      startPlayingExploration()
+      clickContinueInteractionButton()
+      typeFractionText("1/2")
+
+      clickSubmitAnswerButton()
+
+      scrollToViewType(CONTINUE_NAVIGATION_BUTTON)
+      onView(withId(R.id.exploration_toolbar_title)).check(
+        matches(isSelected())
       )
     }
   }

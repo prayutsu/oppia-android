@@ -3,6 +3,7 @@ package org.oppia.app.testing
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.scrollToPosition
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
@@ -77,7 +78,9 @@ class TopicTestActivityForStoryTest {
           2,
           R.id.chapter_recycler_view
         )
-      ).check(matches(isDisplayed()))
+      ).perform(click())
+
+//      onView(withId())
     }
   }
 }
