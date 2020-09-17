@@ -172,7 +172,7 @@ class QuestionPlayerFragmentPresenter @Inject constructor(
   }
 
   fun onSubmitButtonClicked() {
-    hideKeyboard()
+//    hideKeyboard()
     handleSubmitAnswer(
       questionViewModel.getPendingAnswer(
         recyclerViewAssembler::getPendingAnswerHandler
