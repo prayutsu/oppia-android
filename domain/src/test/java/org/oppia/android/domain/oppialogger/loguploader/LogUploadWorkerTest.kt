@@ -133,7 +133,6 @@ class LogUploadWorkerTest {
     val request: OneTimeWorkRequest = OneTimeWorkRequestBuilder<LogUploadWorker>()
       .setInputData(inputData)
       .build()
-
     workManager.enqueue(request)
     testCoroutineDispatchers.runCurrent()
     val workInfo = workManager.getWorkInfoById(request.id)
