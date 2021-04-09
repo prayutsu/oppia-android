@@ -127,9 +127,12 @@ bind(
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
+fail_if_repin_required = True
+
 # Note to developers: new dependencies should be added to //third_party:versions.bzl, not here.
 maven_install(
     artifacts = DAGGER_ARTIFACTS + get_maven_dependencies(),
+    maven_install_json = "//:maven_install.json",
     repositories = DAGGER_REPOSITORIES + [
         "https://bintray.com/bintray/jcenter",
         "https://jcenter.bintray.com/",
@@ -138,3 +141,7 @@ maven_install(
         "https://repo1.maven.org/maven2",
     ],
 )
+
+load("@maven//:defs.bzl", "pinned_maven_install")
+
+pinned_maven_install()
