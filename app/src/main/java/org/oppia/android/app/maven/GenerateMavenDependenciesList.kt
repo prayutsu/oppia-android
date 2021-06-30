@@ -187,18 +187,18 @@ fun parseArtifactName(artifactName: String): String {
 fun runBazelQueryCommand(rootPath: String) {
   val rootDirectory = File(rootPath).absoluteFile
   val bazelClient = BazelClient(rootDirectory)
-  val output = bazelClient.executeBazelCommand(
-    "query",
-    "\'deps(deps(//:oppia)",
-    "intersect",
-    "//third_party/...)",
-    "intersect",
-    "@maven//...\'"
-  )
 //  val output = bazelClient.executeBazelCommand(
 //    "query",
-//    "\'deps(//:oppia) intersect //third_party/...\'"
+//    "\'deps(deps(//:oppia)",
+//    "intersect",
+//    "//third_party/...)",
+//    "intersect",
+//    "@maven//...\'"
 //  )
+  val output = bazelClient.executeBazelCommand(
+    "query",
+    "\'deps(//:oppia) intersect //third_party/...\'"
+  )
   println(output)
   output.forEach { dep ->
     bazelQueryDepsNames.add(dep.substring(9, dep.length))
